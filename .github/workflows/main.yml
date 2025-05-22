@@ -19,6 +19,15 @@ jobs:
           java-version: '21'
           distribution: 'corretto'
 
-
       - name: Build and test with Maven
         run: mvn clean verify --file ./simple-api/pom.xml
+
+      - name: Run SonarCloud analysis
+        run: mvn -B verify sonar:sonar \
+          -Dsonar.projectKey=buhsnn_tp-devops-correction-docker \
+          -Dsonar.organization=bdml-efrei \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+          --file ./simple-api/pom.xml
+
+          
